@@ -1,0 +1,46 @@
+"use client";
+import logo from "@/public/assets/images/logo.svg";
+import { MenuIcon, XIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import { useState } from "react";
+import MobileMenu from "./MobileMenu";
+import { AnimatePresence } from "motion/react";
+import { Separator } from "../ui/separator";
+
+function Navbar() {
+  const [openMenu, setOpenMenu] = useState(false);
+
+  return (
+    <>
+      <div className="relative z-9 mx-auto max-w-360 p-4 md:px-8 md:pt-8 md:pb-5 lg:py-5 lg:min-[1350px]:px-15">
+        <div className="flex items-center justify-between">
+          <Image src={logo} alt="Logo" loading="eager" />
+
+          <button
+            onClick={() => setOpenMenu((prev) => !prev)}
+            className="rounded-sm bg-neutral-300 p-3 lg:hidden"
+          >
+            {!openMenu ? <MenuIcon /> : <XIcon />}
+          </button>
+
+          <div className="text-preset-7 hidden gap-10 lg:flex">
+            <Link href={"/"}>Home</Link>
+            <Link href={"/about"}>about</Link>
+            <Link href={"/recipes"}>Recipes</Link>
+          </div>
+          <Button size={"md"} className="hidden lg:block">
+            <span className="text-preset-5">Browse recipes</span>
+          </Button>
+        </div>
+        <AnimatePresence>
+          {openMenu && <MobileMenu onOpenMenu={setOpenMenu} />}
+        </AnimatePresence>
+      </div>
+      <Separator />
+    </>
+  );
+}
+
+export default Navbar;
