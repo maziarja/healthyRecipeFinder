@@ -24,7 +24,9 @@ function CookTimeFilter() {
         }
 
         const query = params.toString();
-        router.push(query ? `/recipes?${params} ` : "/recipes");
+        router.push(query ? `/recipes?${params} ` : "/recipes", {
+          scroll: false,
+        });
       }}
     >
       <SelectTrigger className="w-full" size="md">

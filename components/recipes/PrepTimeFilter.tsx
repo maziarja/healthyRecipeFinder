@@ -25,7 +25,9 @@ function PrepTimeFilter() {
           params.set("prepTime", val);
         }
         const query = params.toString();
-        router.push(query ? `/recipes?${query}` : "/recipes");
+        router.push(query ? `/recipes?${query}` : "/recipes", {
+          scroll: false,
+        });
       }}
     >
       <SelectTrigger className="w-full" size="md">

@@ -20,7 +20,9 @@ function SearchQuery() {
           }
 
           const query = params.toString();
-          router.push(query ? `/recipes?${query}` : "/recipes");
+          router.push(query ? `/recipes?${query}` : "/recipes", {
+            scroll: false,
+          });
         }}
         type="text"
         placeholder="Search by name or ingredient..."
