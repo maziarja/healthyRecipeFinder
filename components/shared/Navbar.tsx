@@ -8,9 +8,11 @@ import { useState } from "react";
 import MobileMenu from "./MobileMenu";
 import { AnimatePresence } from "motion/react";
 import { Separator } from "../ui/separator";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -26,12 +28,29 @@ function Navbar() {
           </button>
 
           <div className="text-preset-7 hidden gap-10 lg:flex">
-            <Link href={"/"}>Home</Link>
-            <Link href={"/about"}>about</Link>
-            <Link href={"/recipes"}>Recipes</Link>
+            <Link
+              href={"/"}
+              className={`${pathname === "/" ? "border-b-3 border-orange-500" : ""}`}
+            >
+              Home
+            </Link>
+            <Link
+              href={"/about"}
+              className={`${pathname === "/about" ? "border-b-3 border-orange-500" : ""}`}
+            >
+              about
+            </Link>
+            <Link
+              href={"/recipes"}
+              className={`${pathname === "/recipes" ? "border-b-3 border-orange-500" : ""}`}
+            >
+              Recipes
+            </Link>
           </div>
-          <Button size={"md"} className="hidden lg:block">
-            <span className="text-preset-5">Browse recipes</span>
+          <Button size={"md"} asChild className="hidden lg:block">
+            <Link href={"/recipes"} className="text-preset-5!">
+              Browse recipes
+            </Link>
           </Button>
         </div>
         <AnimatePresence>

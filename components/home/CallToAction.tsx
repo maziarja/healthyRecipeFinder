@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "../ui/button";
 import PatternFork from "../ui/icons/pattern-fork";
 import PatternKnife from "../ui/icons/pattern-knife";
@@ -19,8 +20,9 @@ function CallToAction() {
         <Button
           size={"mdLg"}
           className="font font-[nunito] text-[18px] leading-[140%] font-bold"
+          asChild
         >
-          Browse recipes
+          <Link href={"/recipes"}>Browse recipes</Link>
         </Button>
       </div>
     </section>
