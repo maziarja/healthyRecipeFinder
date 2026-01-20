@@ -22,6 +22,13 @@ function MobileMenu({
     return () => document.removeEventListener("click", handleClick);
   }, [onOpenMenu]);
 
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: -12, scale: 0.95 }}
