@@ -1,15 +1,19 @@
 "use server";
 
+import { PAGE_SIZE } from "@/lib/const";
 import connectDB from "@/lib/database";
 import { recipesSchema } from "@/lib/schemas/recipe";
 import { Recipe } from "@/models/Recipe";
 
-export async function getRecipes() {
+export async function getRecipes(page: number) {
   await connectDB();
 
   const initialRecipes = await Recipe.find({
     initial: true,
-  }).lean();
+  })
+    .skip((page - 1) * PAGE_SIZE)
+    .limit(PAGE_SIZE)
+    .lean();
 
   // Later on we add User recipes here
 
