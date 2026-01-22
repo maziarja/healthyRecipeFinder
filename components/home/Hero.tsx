@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import headerImage from "@/public/assets/images/image-home-hero-small.webp";
 import headerImageLarge from "@/public/assets/images/image-home-hero-large.webp";
+import Link from "next/link";
 
 function Hero() {
   return (
@@ -20,8 +21,10 @@ function Hero() {
             <span className="lg:block">—no processed junk, no guesswork.</span>
           </p>
         </div>
-        <Button size={"xl"}>
-          <span className="text-preset-5">Start exploring</span>
+        <Button size={"xl"} asChild>
+          <Link href="/recipes" className="text-preset-5!">
+            Start exploring
+          </Link>
         </Button>
       </div>
 

@@ -49,7 +49,7 @@ function Navbar() {
           </div>
           <Button size={"md"} asChild className="hidden lg:block">
             <Link href={"/recipes"} className="text-preset-5!">
-              Browse recipes
+              Add recipes
             </Link>
           </Button>
         </div>

@@ -47,7 +47,9 @@ function MobileMenu({
       <Link className="rounded-lg px-2 py-3" href={"/recipes"}>
         Recipes
       </Link>
-      <Button>Browse recipes</Button>
+      <Button size={"md"} className="text-preset-5! mt-2.5">
+        Add recipes
+      </Button>
     </motion.div>
   );
 }
