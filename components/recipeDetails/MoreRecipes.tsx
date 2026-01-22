@@ -2,7 +2,7 @@ import { getRecipes } from "@/app/_actions/getRecipes";
 import RecipeCard from "../recipes/RecipeCard";
 
 async function MoreRecipes({ currentRecipeId }: { currentRecipeId: string }) {
-  const recipes = await getRecipes();
+  const { recipes } = await getRecipes();
 
   const moreRecipes = recipes
     .filter((recipe) => recipe._id !== currentRecipeId)

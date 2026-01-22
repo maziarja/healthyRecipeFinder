@@ -5,15 +5,40 @@ import connectDB from "@/lib/database";
 import { recipesSchema } from "@/lib/schemas/recipe";
 import { Recipe } from "@/models/Recipe";
 
-export async function getRecipes(page: number) {
+export async function getRecipes(
+  page?: string,
+  cookingTime?: string,
+  prepTime?: string,
+  query?: string,
+) {
   await connectDB();
 
-  const initialRecipes = await Recipe.find({
+  const filter = {
     initial: true,
-  })
-    .skip((page - 1) * PAGE_SIZE)
-    .limit(PAGE_SIZE)
-    .lean();
+    ...(cookingTime !== undefined && {
+      cookingTime: {
+        $gte: Number(cookingTime),
+        $lt: Number(cookingTime) + 5,
+      },
+    }),
+    ...(prepTime !== undefined && {
+      prepMinutes: { $gte: Number(prepTime), $lt: Number(prepTime) + 5 },
+    }),
+
+    ...(query && {
+      $or: [
+        { title: { $regex: query, $options: "i" } },
+        { ingredients: { $regex: query, $options: "i" } },
+      ],
+    }),
+  };
+
+  const skip = (Number(page) - 1) * PAGE_SIZE;
+
+  const [initialRecipes, numOfRecipes] = await Promise.all([
+    Recipe.find(filter).skip(skip).limit(PAGE_SIZE).lean(),
+    Recipe.countDocuments(filter),
+  ]);
 
   // Later on we add User recipes here
 
@@ -31,5 +56,5 @@ export async function getRecipes(page: number) {
     throw new Error(validPlainRecipes.error.issues[0].message);
   }
 
-  return validPlainRecipes.data;
+  return { recipes: validPlainRecipes.data, numOfRecipes };
 }

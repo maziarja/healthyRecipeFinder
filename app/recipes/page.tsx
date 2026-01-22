@@ -6,19 +6,27 @@ import { Suspense } from "react";
 
 type Props = {
   searchParams: Promise<{
-    page: number;
+    page: string;
+    cookingTime: string;
+    prepTime: string;
+    query: string;
   }>;
 };
 
 async function Page({ searchParams }: Props) {
-  const { page = 1 } = await searchParams;
+  const { page = "1", cookingTime, prepTime, query } = await searchParams;
 
   return (
     <>
       <Navbar />
       <Header />
       <Suspense fallback={<p>Loading....</p>}>
-        <Recipes page={page} />
+        <Recipes
+          page={page}
+          cookingTime={cookingTime}
+          prepTime={prepTime}
+          query={query}
+        />
       </Suspense>
       <Footer />
     </>

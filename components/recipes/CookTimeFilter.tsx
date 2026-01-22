@@ -21,6 +21,7 @@ function CookTimeFilter() {
           params.delete("cookingTime");
         } else {
           params.set("cookingTime", val);
+          params.set("page", "1");
         }
 
         const query = params.toString();

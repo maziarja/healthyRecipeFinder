@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Pagination,
   PaginationContent,
@@ -8,19 +10,31 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { PAGE_SIZE } from "@/lib/const";
-import { Recipe } from "@/models/Recipe";
+import { useSearchParams } from "next/navigation";
 
-async function PaginationRecipes({ currentPage }: { currentPage: number }) {
-  const totalRecipes = await Recipe.countDocuments();
-  const numOfPages = Math.ceil(totalRecipes / PAGE_SIZE);
-  if (numOfPages === 1) return null;
+type Props = { currentPage: string; numOfRecipes: number };
+
+function PaginationRecipes({ currentPage, numOfRecipes }: Props) {
+  const searchParams = useSearchParams();
+
+  const params = new URLSearchParams(searchParams.toString());
+  params.delete("page");
+
+  const url = params.toString() ? `&${params.toString()}` : "";
+
+  const numOfPages = Math.ceil(numOfRecipes / PAGE_SIZE);
+
+  if (numOfPages <= 1) return null;
+
   return (
     <Pagination>
       <PaginationContent>
         {/* ************* PreviousPage *************** */}
-        {currentPage > 1 && (
+        {+currentPage > 1 && (
           <PaginationItem>
-            <PaginationPrevious href={`/recipes?page=${+currentPage - 1}`} />
+            <PaginationPrevious
+              href={`/recipes?page=${+currentPage - 1}${url}`}
+            />
           </PaginationItem>
         )}
 
@@ -28,7 +42,7 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
         <PaginationItem>
           <PaginationLink
             isActive={+currentPage === 1}
-            href={`/recipes?page=${1}`}
+            href={`/recipes?page=${1}${url}`}
           >
             {1}
           </PaginationLink>
@@ -43,7 +57,7 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
           // *** CurrentPage -2 ***
           +currentPage - 2 > 1 && (
             <PaginationItem>
-              <PaginationLink href={`/recipes?page=${+currentPage - 2}`}>
+              <PaginationLink href={`/recipes?page=${+currentPage - 2}${url}`}>
                 {+currentPage - 2}
               </PaginationLink>
             </PaginationItem>
@@ -53,7 +67,7 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
         {/* ************* CurrentPage -1 *************** */}
         {+currentPage - 1 > 1 && (
           <PaginationItem>
-            <PaginationLink href={`/recipes?page=${+currentPage - 1}`}>
+            <PaginationLink href={`/recipes?page=${+currentPage - 1}${url}`}>
               {+currentPage - 1}
             </PaginationLink>
           </PaginationItem>
@@ -62,7 +76,10 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
         {/* ************* CurrentPage *************** */}
         {+currentPage !== 1 && +currentPage !== numOfPages && (
           <PaginationItem>
-            <PaginationLink isActive href={`/recipes?page=${+currentPage}`}>
+            <PaginationLink
+              isActive
+              href={`/recipes?page=${+currentPage}${url}`}
+            >
               {+currentPage}
             </PaginationLink>
           </PaginationItem>
@@ -71,7 +88,7 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
         {/* ************* CurrentPage +1 *************** */}
         {+currentPage + 1 < numOfPages && (
           <PaginationItem>
-            <PaginationLink href={`/recipes?page=${+currentPage + 1}`}>
+            <PaginationLink href={`/recipes?page=${+currentPage + 1}${url}`}>
               {+currentPage + 1}
             </PaginationLink>
           </PaginationItem>
@@ -86,7 +103,7 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
           // *** CurrentPage +2 ***
           +currentPage + 2 < numOfPages && (
             <PaginationItem>
-              <PaginationLink href={`/recipes?page=${+currentPage + 2}`}>
+              <PaginationLink href={`/recipes?page=${+currentPage + 2}${url}`}>
                 {+currentPage + 2}
               </PaginationLink>
             </PaginationItem>
@@ -97,16 +114,16 @@ async function PaginationRecipes({ currentPage }: { currentPage: number }) {
         <PaginationItem>
           <PaginationLink
             isActive={+currentPage === numOfPages}
-            href={`/recipes?page=${numOfPages}`}
+            href={`/recipes?page=${numOfPages}${url}`}
           >
             {numOfPages}
           </PaginationLink>
         </PaginationItem>
 
         {/* ************* NextPage *************** */}
-        {currentPage < numOfPages && (
+        {+currentPage < numOfPages && (
           <PaginationItem>
-            <PaginationNext href={`/recipes?page=${+currentPage + 1}`} />
+            <PaginationNext href={`/recipes?page=${+currentPage + 1}${url}`} />
           </PaginationItem>
         )}
       </PaginationContent>

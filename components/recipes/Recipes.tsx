@@ -3,8 +3,20 @@ import RecipeFilters from "./RecipeFilters";
 import RecipeCard from "./RecipeCard";
 import PaginationRecipes from "./PaginationRecipes";
 
-async function Recipes({ page }: { page: number }) {
-  const recipes = await getRecipes(page);
+type Props = {
+  page: string;
+  cookingTime: string;
+  prepTime: string;
+  query: string;
+};
+
+async function Recipes({ page, cookingTime, prepTime, query }: Props) {
+  const { recipes, numOfRecipes } = await getRecipes(
+    page,
+    cookingTime,
+    prepTime,
+    query,
+  );
 
   return (
     <section className="space-y-6 px-4 md:px-8 md:py-0 lg:mx-auto lg:max-w-314 lg:pb-24">
@@ -14,7 +26,7 @@ async function Recipes({ page }: { page: number }) {
           <RecipeCard key={recipe._id} recipe={recipe} />
         ))}
       </div>
-      <PaginationRecipes currentPage={page} />
+      <PaginationRecipes currentPage={page} numOfRecipes={numOfRecipes} />
     </section>
   );
 }

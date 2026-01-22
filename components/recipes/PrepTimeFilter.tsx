@@ -14,6 +14,7 @@ function PrepTimeFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const prepTime = searchParams.get("prepTime");
+
   const params = new URLSearchParams(searchParams.toString());
 
   return (
@@ -23,8 +24,10 @@ function PrepTimeFilter() {
           params.delete("prepTime");
         } else {
           params.set("prepTime", val);
+          params.set("page", "1");
         }
         const query = params.toString();
+
         router.push(query ? `/recipes?${query}` : "/recipes", {
           scroll: false,
         });
