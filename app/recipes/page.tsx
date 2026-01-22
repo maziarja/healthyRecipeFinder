@@ -1,5 +1,6 @@
 import Header from "@/components/recipes/Header";
 import Recipes from "@/components/recipes/Recipes";
+import RecipesSkeleton from "@/components/recipes/RecipesSkeleton";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { Suspense } from "react";
@@ -20,7 +21,7 @@ async function Page({ searchParams }: Props) {
     <>
       <Navbar />
       <Header />
-      <Suspense fallback={<p>Loading....</p>}>
+      <Suspense fallback={<RecipesSkeleton />}>
         <Recipes
           page={page}
           cookingTime={cookingTime}

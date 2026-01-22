@@ -1,5 +1,6 @@
 import { getRecipeById } from "@/app/_actions/getRecipeById";
 import MoreRecipes from "@/components/recipeDetails/MoreRecipes";
+import MoreRecipesSkeleton from "@/components/recipeDetails/MoreRecipesSkeleton";
 import Recipe from "@/components/recipeDetails/Recipe";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
@@ -21,7 +22,7 @@ async function Page({ params }: Props) {
       <section className="px-4 py-12 md:px-8 lg:mx-auto lg:max-w-314 lg:space-y-16 lg:pb-24">
         <Recipe recipe={recipe} />
         <Separator />
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<MoreRecipesSkeleton />}>
           <MoreRecipes currentRecipeId={id} />
         </Suspense>
       </section>
