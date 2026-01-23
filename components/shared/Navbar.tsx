@@ -9,6 +9,7 @@ import MobileMenu from "./MobileMenu";
 import { AnimatePresence } from "motion/react";
 import { Separator } from "../ui/separator";
 import { usePathname } from "next/navigation";
+import AccountDropdown from "../auth/AccountDropdown";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
@@ -20,12 +21,17 @@ function Navbar() {
         <div className="flex items-center justify-between">
           <Image src={logo} alt="Logo" loading="eager" />
 
-          <button
-            onClick={() => setOpenMenu((prev) => !prev)}
-            className="rounded-sm bg-neutral-300 p-3 lg:hidden"
-          >
-            {!openMenu ? <MenuIcon /> : <XIcon />}
-          </button>
+          <div className="flex items-center gap-4">
+            <div className="lg:hidden">
+              <AccountDropdown />
+            </div>
+            <button
+              onClick={() => setOpenMenu((prev) => !prev)}
+              className="rounded-sm bg-neutral-300 p-3 lg:hidden"
+            >
+              {!openMenu ? <MenuIcon /> : <XIcon />}
+            </button>
+          </div>
 
           <div className="text-preset-7 hidden gap-10 lg:flex">
             <Link
@@ -47,11 +53,14 @@ function Navbar() {
               Recipes
             </Link>
           </div>
-          <Button size={"md"} asChild className="hidden lg:block">
-            <Link href={"/recipes"} className="text-preset-5!">
-              Add recipes
-            </Link>
-          </Button>
+          <div className="hidden items-center gap-8 lg:flex">
+            <AccountDropdown />
+            <Button size={"md"} asChild className="hidden lg:block">
+              <Link href={"/recipes"} className="text-preset-5!">
+                Add recipes
+              </Link>
+            </Button>
+          </div>
         </div>
         <AnimatePresence>
           {openMenu && <MobileMenu onOpenMenu={setOpenMenu} />}

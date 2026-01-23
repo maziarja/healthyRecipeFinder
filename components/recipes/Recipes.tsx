@@ -1,4 +1,4 @@
-import { getRecipes } from "@/app/_actions/getRecipes";
+import { getRecipes } from "@/app/_actions/recipes/getRecipes";
 import RecipeFilters from "./RecipeFilters";
 import RecipeCard from "./RecipeCard";
 import PaginationRecipes from "./PaginationRecipes";

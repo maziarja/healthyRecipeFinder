@@ -1,4 +1,4 @@
-import { getRecipes } from "@/app/_actions/getRecipes";
+import { getRecipes } from "@/app/_actions/recipes/getRecipes";
 import RecipeCard from "../recipes/RecipeCard";
 
 async function MoreRecipes({ currentRecipeId }: { currentRecipeId: string }) {

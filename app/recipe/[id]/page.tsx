@@ -1,4 +1,4 @@
-import { getRecipeById } from "@/app/_actions/getRecipeById";
+import { getRecipeById } from "@/app/_actions/recipes/getRecipeById";
 import MoreRecipes from "@/components/recipeDetails/MoreRecipes";
 import MoreRecipesSkeleton from "@/components/recipeDetails/MoreRecipesSkeleton";
 import Recipe from "@/components/recipeDetails/Recipe";

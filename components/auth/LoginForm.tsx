@@ -9,20 +9,35 @@ import { Controller, useForm } from "react-hook-form";
 import { Field, FieldError, FieldLabel } from "../ui/field";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, LoginType } from "@/lib/schemas/authSchema";
+import { loginUser } from "@/app/_actions/auth/loginUser";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-
+  const router = useRouter();
+  const { refreshSession } = useAuth();
   const form = useForm<LoginType>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "mazi@gmail.com",
+      password: "mazimazi",
     },
   });
 
-  function onSubmit(data: LoginType) {
-    console.log(data);
+  async function onSubmit(data: LoginType) {
+    try {
+      const result = await loginUser(data);
+      if (result.success) {
+        form.reset();
+        await refreshSession();
+        router.push("/");
+      } else {
+        form.setError("root", { message: "Invalid Credentials" });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -105,6 +120,10 @@ function LoginForm() {
               </Field>
             )}
           />
+
+          {form.formState.errors.root && (
+            <FieldError>{form.formState.errors.root.message}</FieldError>
+          )}
 
           {/* Submit Button */}
           <Button type="submit" size="xl" className="w-full">

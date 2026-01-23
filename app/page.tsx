@@ -5,8 +5,11 @@ import Hero from "@/components/home/Hero";
 import Footer from "@/components/shared/Footer";
 import Navbar from "@/components/shared/Navbar";
 import { Separator } from "@/components/ui/separator";
+import { auth } from "@/lib/auth";
 
-function Page() {
+async function Page() {
+  const session = await auth();
+  console.log(session?.user);
   return (
     <>
       <Navbar />

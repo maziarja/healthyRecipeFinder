@@ -10,6 +10,7 @@ export const userSchema = new Schema<UserType>({
   email: {
     type: String,
     required: [true, "Email is required"],
+    unique: [true, "You already have an account"],
   },
   password: {
     type: String,

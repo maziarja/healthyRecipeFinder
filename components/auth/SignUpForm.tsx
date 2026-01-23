@@ -9,10 +9,15 @@ import { Field, FieldError, FieldLabel } from "../ui/field";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, SignUpType } from "@/lib/schemas/authSchema";
+import { signUpUser } from "@/app/_actions/auth/signUpUser";
+import { useRouter } from "next/navigation";
+import { useAuth } from "./AuthContext";
 
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const router = useRouter();
+  const { refreshSession } = useAuth();
 
   const form = useForm<SignUpType>({
     resolver: zodResolver(signUpSchema),
@@ -24,8 +29,20 @@ function SignUpForm() {
     },
   });
 
-  function onSubmit(data: SignUpType) {
-    console.log(data);
+  async function onSubmit(data: SignUpType) {
+    try {
+      const result = await signUpUser(data);
+
+      if (result.success) {
+        form.reset();
+        await refreshSession();
+        router.push("/");
+      } else {
+        form.setError("root", { message: result.message });
+      }
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
@@ -174,6 +191,10 @@ function SignUpForm() {
               </Field>
             )}
           />
+
+          {form.formState.errors.root && (
+            <FieldError>{form.formState.errors.root.message}</FieldError>
+          )}
 
           {/* Submit Button */}
           <Button type="submit" size="xl" className="w-full">
