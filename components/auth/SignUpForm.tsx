@@ -12,6 +12,7 @@ import { signUpSchema, SignUpType } from "@/lib/schemas/authSchema";
 import { signUpUser } from "@/app/_actions/auth/signUpUser";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
+import { Spinner } from "../ui/spinner";
 
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,7 +47,7 @@ function SignUpForm() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-8 px-4 py-12 md:px-8">
+    <div className="mx-auto w-full max-w-2xl space-y-8 px-4 py-12 md:px-8">
       <div className="space-y-4 text-center">
         <h1 className="text-preset-2 md:text-preset-2-tablet text-neutral-900">
           Create your account
@@ -198,7 +199,11 @@ function SignUpForm() {
 
           {/* Submit Button */}
           <Button type="submit" size="xl" className="w-full">
-            <span className="text-preset-8">Sign Up</span>
+            {form.formState.isSubmitting ? (
+              <Spinner className="size-7" />
+            ) : (
+              <span className="text-preset-8">Sign Up</span>
+            )}
           </Button>
 
           {/* Login Link */}

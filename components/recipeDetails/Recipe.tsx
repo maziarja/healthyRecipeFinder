@@ -6,14 +6,18 @@ import generalFoodPhoto from "@/public/assets/images/generalFood.jpg";
 import RecipeMeta from "./RecipeMeta";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeInstructions from "./RecipeInstructions";
+import RecipeOwnerAction from "./RecipeOwnerAction";
 
 function Recipe({ recipe }: { recipe: RecipeType }) {
   return (
     <div className="pb-12 lg:p-0">
       <div className="space-y-4">
-        <div className="text-preset-7 text-neutral-900">
-          <span className="opacity-60">Recipes / </span>
-          <span className="capitalize opacity-100">{recipe.title}</span>
+        <div className="text-preset-7 flex items-center justify-between text-neutral-900">
+          <div>
+            <span className="opacity-60">Recipes / </span>
+            <span className="capitalize opacity-100">{recipe.title}</span>
+          </div>
+          {recipe.owner && <RecipeOwnerAction recipeId={recipe._id} />}
         </div>
         <div className="grid gap-10 lg:grid-cols-[580px_1fr]">
           <div className="relative aspect-square lg:max-h-145 lg:max-w-145">

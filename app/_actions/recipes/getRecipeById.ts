@@ -12,6 +12,7 @@ export async function getRecipeById(id: string) {
   const plainRecipe = {
     ...recipe,
     _id: recipe?._id.toString(),
+    owner: recipe?.owner?.toString() || null,
   };
 
   const validPlainRecipe = recipeSchema.safeParse(plainRecipe);

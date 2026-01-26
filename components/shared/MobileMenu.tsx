@@ -4,12 +4,14 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { useEffect, useRef } from "react";
 import { motion } from "motion/react";
+import { useAuth } from "../auth/AuthContext";
 
 function MobileMenu({
   onOpenMenu,
 }: {
   onOpenMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const { isAuthenticated } = useAuth();
   const ref = useRef<null | HTMLDivElement>(null);
   useEffect(() => {
     function handleClick(e: Event) {
@@ -47,8 +49,13 @@ function MobileMenu({
       <Link className="rounded-lg px-2 py-3" href={"/recipes"}>
         Recipes
       </Link>
-      <Button size={"md"} className="text-preset-5! mt-2.5">
-        Add recipes
+      <Button size={"md"} className="mt-2.5">
+        <Link
+          href={`${isAuthenticated ? "/addRecipe" : "/auth/login"}`}
+          className="text-preset-5 w-full"
+        >
+          Add recipes
+        </Link>
       </Button>
     </motion.div>
   );

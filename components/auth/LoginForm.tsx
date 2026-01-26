@@ -12,6 +12,7 @@ import { loginSchema, LoginType } from "@/lib/schemas/authSchema";
 import { loginUser } from "@/app/_actions/auth/loginUser";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
+import { Spinner } from "../ui/spinner";
 
 function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -41,7 +42,7 @@ function LoginForm() {
   }
 
   return (
-    <div className="mx-auto w-full max-w-md space-y-8 px-4 py-12 md:px-8">
+    <div className="mx-auto w-full max-w-2xl space-y-8 px-4 py-12 md:px-8">
       <div className="space-y-4 text-center">
         <h1 className="text-preset-2 md:text-preset-2-tablet text-neutral-900">
           Welcome back
@@ -127,7 +128,11 @@ function LoginForm() {
 
           {/* Submit Button */}
           <Button type="submit" size="xl" className="w-full">
-            <span className="text-preset-8">Sign In</span>
+            {form.formState.isSubmitting ? (
+              <Spinner className="size-7" />
+            ) : (
+              <span className="text-preset-8">Sign In</span>
+            )}
           </Button>
 
           {/* Sign Up Link */}

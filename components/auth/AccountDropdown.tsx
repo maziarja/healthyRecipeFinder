@@ -18,11 +18,13 @@ function AccountDropdown() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <div className="rounded-full bg-orange-500 p-1">
+        <div
+          className={`rounded-full ${isAuthenticated ? "bg-orange-500" : ""} p-1`}
+        >
           <User2Icon />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent sideOffset={10}>
         <DropdownMenuGroup>
           <DropdownMenuLabel className="text-preset-8!">
             My Account

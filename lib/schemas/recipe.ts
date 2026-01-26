@@ -2,6 +2,7 @@ import z from "zod";
 
 export const recipeSchema = z.object({
   _id: z.string(),
+  owner: z.string().nullable(),
   title: z.string(),
   image: z
     .object({
@@ -15,7 +16,8 @@ export const recipeSchema = z.object({
   cookingTime: z.number(),
   ingredients: z.array(z.string()),
   instructions: z.array(z.string()),
-  initial: z.boolean(),
+  isPublic: z.boolean(),
+  shareToken: z.string().nullable(),
 });
 
 export const recipesSchema = z.array(recipeSchema);

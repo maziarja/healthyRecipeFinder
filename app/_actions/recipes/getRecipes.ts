@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/lib/auth";
 import { PAGE_SIZE } from "@/lib/const";
 import connectDB from "@/lib/database";
 import { recipesSchema } from "@/lib/schemas/recipe";
@@ -13,8 +14,19 @@ export async function getRecipes(
 ) {
   await connectDB();
 
+  const session = await auth();
+  const userId = session?.user?.id;
+
+  const visibilityFilter = userId
+    ? {
+        $or: [{ owner: null }, { owner: userId }],
+      }
+    : {
+        owner: null,
+      };
+
   const filter = {
-    initial: true,
+    ...visibilityFilter,
     ...(cookingTime !== undefined && {
       cookingTime: {
         $gte: Number(cookingTime),
@@ -36,7 +48,11 @@ export async function getRecipes(
   const skip = (Number(page) - 1) * PAGE_SIZE;
 
   const [initialRecipes, numOfRecipes] = await Promise.all([
-    Recipe.find(filter).skip(skip).limit(PAGE_SIZE).lean(),
+    Recipe.find(filter)
+      .skip(skip)
+      .limit(PAGE_SIZE)
+      .sort({ createdAt: -1 })
+      .lean(),
     Recipe.countDocuments(filter),
   ]);
 
@@ -46,6 +62,7 @@ export async function getRecipes(
     return {
       ...recipe,
       _id: recipe._id.toString(),
+      owner: recipe.owner?.toString() || null,
     };
   });
 

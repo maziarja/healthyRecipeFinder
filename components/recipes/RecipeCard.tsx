@@ -6,6 +6,7 @@ import Image from "next/image";
 import generalFoodPhoto from "@/public/assets/images/generalFood.jpg";
 import Link from "next/link";
 import RecipeMeta from "../recipeDetails/RecipeMeta";
+import RecipeOwnerAction from "../recipeDetails/RecipeOwnerAction";
 
 function RecipeCard({ recipe }: { recipe: RecipeType }) {
   return (
@@ -27,9 +28,12 @@ function RecipeCard({ recipe }: { recipe: RecipeType }) {
         </div>
         <div className="space-y-4 px-2">
           <div className="space-y-2.5">
-            <p className="text-preset-5 line-clamp-1 text-neutral-900">
-              {recipe.title}
-            </p>
+            <div className="flex items-center justify-between">
+              <p className="text-preset-5 line-clamp-1 text-neutral-900">
+                {recipe.title}
+              </p>
+              {recipe.owner && <RecipeOwnerAction recipeId={recipe._id} />}
+            </div>
             <p className="text-preset-9 line-clamp-2 text-neutral-600">
               {recipe.overview}
             </p>

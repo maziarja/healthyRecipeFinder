@@ -10,10 +10,12 @@ import { AnimatePresence } from "motion/react";
 import { Separator } from "../ui/separator";
 import { usePathname } from "next/navigation";
 import AccountDropdown from "../auth/AccountDropdown";
+import { useAuth } from "../auth/AuthContext";
 
 function Navbar() {
   const [openMenu, setOpenMenu] = useState(false);
   const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
 
   return (
     <>
@@ -55,8 +57,11 @@ function Navbar() {
           </div>
           <div className="hidden items-center gap-8 lg:flex">
             <AccountDropdown />
-            <Button size={"md"} asChild className="hidden lg:block">
-              <Link href={"/recipes"} className="text-preset-5!">
+            <Button size={"md"} className="hidden lg:block">
+              <Link
+                href={`${isAuthenticated ? "/addRecipe" : "/auth/login"}`}
+                className="text-preset-5"
+              >
                 Add recipes
               </Link>
             </Button>

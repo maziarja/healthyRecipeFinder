@@ -2,6 +2,7 @@ import mongoose, { Model, models, Schema } from "mongoose";
 
 export type RecipeType = {
   _id: string;
+  owner: string | null;
   title: string;
   image?: {
     large?: string;
@@ -13,11 +14,17 @@ export type RecipeType = {
   cookingTime: number;
   ingredients: string[];
   instructions: string[];
-  initial: boolean;
+  isPublic: boolean;
+  shareToken: string | null;
 };
 
 const recipeSchema = new Schema<RecipeType>(
   {
+    owner: {
+      type: Schema.ObjectId,
+      ref: "User",
+      default: null,
+    },
     title: {
       type: String,
       required: [true, "Title is required"],
@@ -53,9 +60,13 @@ const recipeSchema = new Schema<RecipeType>(
       type: [String],
       required: [true, "Please enter instructions"],
     },
-    initial: {
+    isPublic: {
       type: Boolean,
       default: false,
+    },
+    shareToken: {
+      type: String,
+      default: null,
     },
   },
   {
