@@ -35,7 +35,10 @@ function RecipeCard({ recipe }: { recipe: RecipeType }) {
               </p>
               {recipe.owner && (
                 <div className="flex items-center gap-2">
-                  <ShareRecipeButton />
+                  <ShareRecipeButton
+                    recipeId={recipe._id}
+                    isPublic={recipe.isPublic}
+                  />
                   <RecipeOwnerAction recipeId={recipe._id} />
                 </div>
               )}
