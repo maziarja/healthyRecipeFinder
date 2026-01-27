@@ -16,6 +16,17 @@ export async function saveRecipe(formData: FormData, recipeId?: string) {
     throw new Error("Unauthorized");
   }
 
+  if (recipeId) {
+    const recipe = await Recipe.findOne({
+      _id: recipeId,
+      owner: session?.user?.id,
+    });
+
+    if (!recipe) {
+      throw new Error("Unauthorized");
+    }
+  }
+
   const image = formData.get("image") as File | null;
 
   // Upload image on cloudinary

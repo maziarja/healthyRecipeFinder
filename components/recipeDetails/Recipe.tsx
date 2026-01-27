@@ -7,6 +7,7 @@ import RecipeMeta from "./RecipeMeta";
 import RecipeIngredients from "./RecipeIngredients";
 import RecipeInstructions from "./RecipeInstructions";
 import RecipeOwnerAction from "./RecipeOwnerAction";
+import ShareRecipeButton from "./ShareRecipeButton";
 
 function Recipe({ recipe }: { recipe: RecipeType }) {
   return (
@@ -17,7 +18,12 @@ function Recipe({ recipe }: { recipe: RecipeType }) {
             <span className="opacity-60">Recipes / </span>
             <span className="capitalize opacity-100">{recipe.title}</span>
           </div>
-          {recipe.owner && <RecipeOwnerAction recipeId={recipe._id} />}
+          {recipe.owner && (
+            <div className="flex items-center gap-2">
+              <ShareRecipeButton />
+              <RecipeOwnerAction recipeId={recipe._id} />
+            </div>
+          )}
         </div>
         <div className="grid gap-10 lg:grid-cols-[580px_1fr]">
           <div className="relative aspect-square lg:max-h-145 lg:max-w-145">

@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/lib/auth";
 import { deleteImage } from "@/lib/cloudinary/deleteImage";
 import connectDB from "@/lib/database";
 import { Recipe } from "@/models/Recipe";
@@ -8,12 +9,20 @@ import { redirect } from "next/navigation";
 
 export async function deleteRecipe(id: string) {
   await connectDB();
+  const session = await auth();
 
-  // 1. Find the recipe first to get the image
-  const recipe = await Recipe.findById(id);
+  if (!session?.user) {
+    new Error("Unauthorized");
+  }
+
+  // 1. Check and Find the recipe first to get the image
+  const recipe = await Recipe.findOne({
+    _id: id,
+    owner: session?.user?.id,
+  });
 
   if (!recipe) {
-    throw new Error("Recipe not found");
+    throw new Error("Unauthorized");
   }
 
   // 2. Delete image from Cloudinary
