@@ -51,7 +51,7 @@ function RecipeCard({ recipe }: { recipe: RecipeType }) {
           />
         </div>
       </div>
-      <Button size={"md"} className="rounded-full" asChild>
+      <Button size={"md"} className="mt-auto rounded-full" asChild>
         <Link className="text-preset-8!" href={`/recipe/${recipe._id}`}>
           View Recipe
         </Link>
