@@ -20,7 +20,10 @@ function Recipe({ recipe }: { recipe: RecipeType }) {
           </div>
           {recipe.owner && (
             <div className="flex items-center gap-2">
-              <ShareRecipeButton recipeId={recipe._id} />
+              <ShareRecipeButton
+                recipeId={recipe._id}
+                isPublic={recipe.isPublic}
+              />
               <RecipeOwnerAction recipeId={recipe._id} />
             </div>
           )}
