@@ -15,7 +15,7 @@ export async function getRecipeById(id: string) {
   }).lean();
 
   if (!recipe) {
-    throw new Error("Unauthorize");
+    throw new Error("Unauthorized");
   }
 
   const plainRecipe = {

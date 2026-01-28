@@ -10,7 +10,7 @@ async function Page() {
   return (
     <>
       <Navbar />
-      <LoginForm />;
+      <LoginForm />
     </>
   );
 }

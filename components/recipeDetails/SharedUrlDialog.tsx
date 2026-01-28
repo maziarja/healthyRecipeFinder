@@ -14,7 +14,7 @@ function SharedUrlDialog({
   setSharedDialogOpen,
   url,
 }: Props) {
-  function copyURl() {
+  function copyUrl() {
     navigator.clipboard.writeText(url || "");
     toast.success("Link copied to clipboard");
   }
@@ -27,7 +27,7 @@ function SharedUrlDialog({
         </DialogHeader>
         <div className="space-y-4">
           <Input value={url || ""} readOnly />
-          <Button className="w-full" onClick={copyURl}>
+          <Button className="w-full" onClick={copyUrl}>
             Copy
           </Button>
         </div>

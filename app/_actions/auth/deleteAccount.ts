@@ -19,7 +19,11 @@ export async function deleteAccount() {
 
     const recipes = await Recipe.find({ owner: session.user.id }).lean();
 
-    recipes.map(async (recipe) => await deleteImage(recipe.image?.small));
+    const deletionPromises = recipes.map((recipe) =>
+      deleteImage(recipe.image?.small),
+    );
+
+    await Promise.all(deletionPromises);
 
     await Recipe.deleteMany({ owner: session.user.id });
 

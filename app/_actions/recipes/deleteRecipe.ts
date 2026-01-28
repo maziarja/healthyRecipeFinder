@@ -12,7 +12,7 @@ export async function deleteRecipe(id: string) {
   const session = await auth();
 
   if (!session?.user) {
-    new Error("Unauthorized");
+    throw new Error("Unauthorized");
   }
 
   // 1. Check and Find the recipe first to get the image
