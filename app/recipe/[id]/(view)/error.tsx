@@ -11,7 +11,7 @@ function Error({ error }: { error: Error }) {
       </h1>
 
       <p className="text-preset-9 max-w-md text-neutral-600">
-        We could n`&apos;`t load this recipe right now. It might have been
+        We could n&apos;t load this recipe right now. It might have been
         removed, or something unexpected happened.
       </p>
 

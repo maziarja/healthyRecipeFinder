@@ -13,6 +13,7 @@ import { signUpUser } from "@/app/_actions/auth/signUpUser";
 import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
 import { Spinner } from "../ui/spinner";
+import { loginUser } from "@/app/_actions/auth/loginUser";
 
 function SignUpForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,8 +37,15 @@ function SignUpForm() {
 
       if (result.success) {
         form.reset();
-        await refreshSession();
-        router.push("/");
+
+        const result2 = await loginUser({
+          email: data.email,
+          password: data.password,
+        });
+        if (result2) {
+          await refreshSession();
+          router.push("/");
+        }
       } else {
         form.setError("root", { message: result.message });
       }

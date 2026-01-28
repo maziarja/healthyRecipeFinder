@@ -33,7 +33,7 @@ function AccountDropdown() {
             <>
               <DropdownMenuItem>
                 <Link href={"/auth/login"} className="text-preset-9 w-full">
-                  Login
+                  Sign in
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
@@ -45,7 +45,7 @@ function AccountDropdown() {
           ) : (
             <button className="w-full" onClick={async () => await logout()}>
               <DropdownMenuItem className="text-preset-9! cursor-pointer">
-                Logout
+                Log out
               </DropdownMenuItem>
             </button>
           )}
