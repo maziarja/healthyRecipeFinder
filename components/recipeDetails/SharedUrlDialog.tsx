@@ -1,3 +1,5 @@
+import { toast } from "sonner";
+import { Button } from "../ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "../ui/dialog";
 import { Input } from "../ui/input";
 
@@ -14,18 +16,21 @@ function SharedUrlDialog({
 }: Props) {
   function copyURl() {
     navigator.clipboard.writeText(url || "");
+    toast.success("Link copied to clipboard");
   }
 
   return (
     <Dialog onOpenChange={setSharedDialogOpen} open={sharedDialogOpen}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Copy this url to access to the recipe</DialogTitle>
-          <div className="space-y-4">
-            <Input value={url || ""} readOnly />
-            <button onClick={copyURl}>Copy</button>
-          </div>
+          <DialogTitle>Copy the link to this recipe</DialogTitle>
         </DialogHeader>
+        <div className="space-y-4">
+          <Input value={url || ""} readOnly />
+          <Button className="w-full" onClick={copyURl}>
+            Copy
+          </Button>
+        </div>
       </DialogContent>
     </Dialog>
   );

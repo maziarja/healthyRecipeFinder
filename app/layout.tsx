@@ -4,6 +4,7 @@ import "./globals.css";
 import { Nunito_Sans } from "next/font/google";
 import { Nunito } from "next/font/google";
 import { AuthProviderWrapper } from "@/components/auth/AuthProviderWrapper";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: {
@@ -34,7 +35,10 @@ export default function RootLayout({
       <body
         className={`bg-neutral-100 antialiased ${nunito.variable} ${nunitoSans.variable}`}
       >
-        <AuthProviderWrapper>{children}</AuthProviderWrapper>
+        <AuthProviderWrapper>
+          {children}
+          <Toaster />
+        </AuthProviderWrapper>
       </body>
     </html>
   );
