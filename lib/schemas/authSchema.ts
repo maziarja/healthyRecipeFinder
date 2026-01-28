@@ -4,7 +4,7 @@ import z from "zod";
 export const signUpSchema = z
   .object({
     fullName: z.string().trim().min(3, "Invalid name"),
-    email: z.email().trim().min(2, "Invalid email address"),
+    email: z.email().trim().min(2, "Invalid email address").toLowerCase(),
     password: z
       .string()
       .trim()
@@ -20,7 +20,7 @@ export type SignUpType = z.infer<typeof signUpSchema>;
 
 //   login
 export const loginSchema = z.object({
-  email: z.email().trim().min(2, "Invalid email address"),
+  email: z.email().trim().min(2, "Invalid email address").toLowerCase(),
   password: z.string().trim().min(6, "Password must be at least 6 characters"),
 });
 
