@@ -43,14 +43,20 @@ function AccountDropdown() {
             {!isAuthenticated ? (
               <>
                 <DropdownMenuItem className="text-preset-9 flex items-center gap-2">
-                  <LogInIcon size={16} />
-                  <Link href={"/auth/login"} className="w-full">
+                  <Link
+                    href={"/auth/login"}
+                    className="flex w-full items-center gap-2"
+                  >
+                    <LogInIcon size={16} />
                     Sign in to your account
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem className="text-preset-9 flex items-center gap-2">
-                  <UserPlusIcon size={16} />
-                  <Link href={"/auth/sign-up"} className="w-full">
+                  <Link
+                    href={"/auth/sign-up"}
+                    className="flex w-full items-center gap-2"
+                  >
+                    <UserPlusIcon size={16} />
                     Create an account
                   </Link>
                 </DropdownMenuItem>
