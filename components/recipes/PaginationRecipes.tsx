@@ -25,6 +25,7 @@ function PaginationRecipes({ currentPage, numOfRecipes }: Props) {
   const numOfPages = Math.ceil(numOfRecipes / PAGE_SIZE);
 
   if (numOfPages <= 1) return null;
+  if (Number(currentPage) > numOfPages) return null;
 
   return (
     <Pagination>
