@@ -12,8 +12,10 @@ type Props = {
 };
 
 async function Recipes({ page, cookingTime, prepTime, query }: Props) {
+  const formattedPage = Number(page) < 1 ? "1" : page;
+
   const { recipes, numOfRecipes } = await getRecipes(
-    page,
+    formattedPage,
     cookingTime,
     prepTime,
     query,

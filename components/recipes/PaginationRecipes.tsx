@@ -26,6 +26,7 @@ function PaginationRecipes({ currentPage, numOfRecipes }: Props) {
 
   if (numOfPages <= 1) return null;
   if (Number(currentPage) > numOfPages) return null;
+  if (Number(currentPage) < 1) return null;
 
   return (
     <Pagination>
